@@ -1,17 +1,18 @@
 package gamecontroller
 
 import (
+	"GDGame/commons"
 	"GDGame/player"
 	"testing"
 )
 
 func TestPlayerRegistration(t *testing.T) {
 	ownerId := "ownerdid"
-	regCommand := &RegisterCommand{
+	regCommand := &commons.RegisterCommand{
 		OwnerId:    ownerId,
 		PlayerName: "testplayer",
 	}
-	success, _ := RegisterPlayer(*regCommand)
+	success, _, _ := RegisterPlayer(*regCommand)
 	if !success {
 		t.Errorf("Register player failed!")
 	}
@@ -25,13 +26,13 @@ func TestPlayerRegistration(t *testing.T) {
 func TestBasicCommand(t *testing.T) {
 	ownerId := "ownerdid"
 
-	regCommand := &RegisterCommand{
+	regCommand := &commons.RegisterCommand{
 		OwnerId:    ownerId,
 		PlayerName: "testplayer",
 	}
-	_, regPlayer := RegisterPlayer(*regCommand)
+	_, _, regPlayer := RegisterPlayer(*regCommand)
 	playerYBeforeMove := regPlayer.Y
-	bcommand := &BasicCommand{
+	bcommand := &commons.BasicCommand{
 		OwnerId:  ownerId,
 		Command:  "Move",
 		ExtraArg: "North",

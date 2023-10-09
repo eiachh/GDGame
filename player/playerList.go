@@ -15,12 +15,17 @@ func LoadPlayerList() map[string]*Player {
 	return make(map[string]*Player, 0)
 }
 
-func RegisterPlayer(ownerId string, player *Player) bool {
+func RegisterPlayer(ownerId string, player *Player) (bool, string) {
 	if players[ownerId] != nil {
-		return false
+		return false, "You already have a character."
+	}
+	for existingPlayerName := range players {
+		if existingPlayerName == player.PlayerName {
+			return false, "Character name is taken!"
+		}
 	}
 	players[ownerId] = player
-	return true
+	return true, "Successfully registered as: " + player.PlayerName
 }
 
 func GetPlayerByOwnerId(ownerId string) *Player {

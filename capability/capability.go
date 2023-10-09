@@ -14,6 +14,11 @@ const (
 
 	Move
 
+	//Always executable
+	ListActions
+	ListCharacterStats
+	TileInfo
+
 	None
 	// Add more capabilities as needed
 )
@@ -39,7 +44,30 @@ func StringToCapability(cap string) Capability {
 		return Fight
 	case "move":
 		return Move
+	case "listactions":
+		return ListActions
+	case "listcharstats":
+		return ListCharacterStats
+	case "tileinfo":
+		return TileInfo
 	default:
 		return None
+	}
+}
+
+func CapabilityToString(cap Capability) string {
+	switch cap {
+	case Forage:
+		return "Forage"
+	case WoodCut:
+		return "WoodCut"
+	case Mine:
+		return "Mine"
+	case Fight:
+		return "Fight"
+	case Move:
+		return "Move"
+	default:
+		return "None"
 	}
 }

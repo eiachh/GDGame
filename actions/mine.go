@@ -6,6 +6,7 @@ import (
 	tile "GDGame/map"
 	"GDGame/player"
 	"math"
+	"strconv"
 	"strings"
 )
 
@@ -30,18 +31,18 @@ func init() {
 	//CopperToolModifBase = 0.5
 }
 
-func (acc *ActionController) executeMine(player *player.Player, onTile *tile.Tile, target string) bool {
+func (acc *ActionController) executeMine(player *player.Player, onTile *tile.Tile, target string) (bool, string) {
 	bestTool := acc.getBestUsableTool(player.Inventory, capability.Mine)
 	switch strings.ToLower(target) {
 	case "copper":
-		mineCopper(player, onTile, bestTool)
-		return true
+		yield := mineCopper(player, onTile, bestTool)
+		return true, ("Successfully mined " + strconv.Itoa(yield) + " copper")
 	default:
-		return false
+		return false, "Failed to mine ore: " + target
 	}
 }
 
-func mineCopper(player *player.Player, onTile *tile.Tile, tool *item.Item) {
+func mineCopper(player *player.Player, onTile *tile.Tile, tool *item.Item) int {
 	yield := CalculateCopperYield(tool.ToolLevel, onTile.Copper)
 
 	for i := 0; i < yield; i++ {
@@ -50,6 +51,8 @@ func mineCopper(player *player.Player, onTile *tile.Tile, tool *item.Item) {
 	}
 
 	onTile.Copper = onTile.Copper - yield
+
+	return yield
 }
 
 func CalculateCopperYield(toolLevel int, copperDensity int) int {

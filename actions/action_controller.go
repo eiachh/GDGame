@@ -53,9 +53,9 @@ func (acc *ActionController) CanExecuteAction(player *player.Player, onTile *til
 	return false
 }
 
-func (acc *ActionController) ExecuteAction(player *player.Player, onTile *tile.Tile, action capability.Capability, capExtraArg string) bool {
+func (acc *ActionController) ExecuteAction(player *player.Player, onTile *tile.Tile, action capability.Capability, capExtraArg string) (bool, string) {
 	if !acc.CanExecuteAction(player, onTile, action) {
-		return false
+		return false, ("Cannot execute action: " + capability.CapabilityToString(action))
 	}
 
 	switch action {
@@ -64,7 +64,7 @@ func (acc *ActionController) ExecuteAction(player *player.Player, onTile *tile.T
 	case capability.Move:
 		return acc.executeMove(player, DirectionToInt(capExtraArg))
 	default:
-		return false
+		return false, "Invalid action" + capability.CapabilityToString(action)
 	}
 }
 
@@ -78,4 +78,8 @@ func (acc *ActionController) getBestUsableTool(inv *player.Inventory, cap capabi
 		}
 	}
 	return retItem
+}
+
+func (acc *ActionController) getAlwaysExecutableActions() {
+
 }

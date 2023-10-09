@@ -1,41 +1,47 @@
 package rest
 
 import (
+	"GDGame/commons"
 	"GDGame/gamecontroller"
 	"encoding/json"
 	"fmt"
 	"net/http"
 )
 
-/*
-	 type Item struct {
-		ID   int    `json:"id"`
-		Name string `json:"name"`
-	}
-
-	func getItemsHandler(w http.ResponseWriter, r *http.Request) {
-		// Convert items to JSON and send it as the response
-		json.NewEncoder(w).Encode(items)
-	}
-*/
-
 func getBasicCommandHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
-	case http.MethodGet:
-		fmt.Printf("Got GET request")
-		json.NewEncoder(w).Encode("ASDDDSDSD222")
 	case http.MethodPost:
 		// Handle POST request
-		var newItem gamecontroller.BasicCommand
+		var newItem commons.BasicCommand
 		err := json.NewDecoder(r.Body).Decode(&newItem)
 		if err != nil {
 			http.Error(w, "Invalid JSON", http.StatusBadRequest)
 			return
 		}
 
-		gamecontroller.HandleBasicCommand(newItem)
-		// Print the received item to the server's console
+		response := gamecontroller.HandleBasicCommand(newItem)
 		fmt.Printf("Received Item: %+v\n", newItem)
+		json.NewEncoder(w).Encode(response)
+		w.WriteHeader(http.StatusOK)
+	}
+}
+
+func getInfoCommandHandler(w http.ResponseWriter, r *http.Request) {
+	//TODO CHANGE
+
+	switch r.Method {
+	case http.MethodPost:
+		// Handle POST request
+		var newItem commons.BasicCommand
+		err := json.NewDecoder(r.Body).Decode(&newItem)
+		if err != nil {
+			http.Error(w, "Invalid JSON", http.StatusBadRequest)
+			return
+		}
+
+		response := gamecontroller.HandleInfoCommand(newItem)
+		fmt.Printf("Received Item: %+v\n", newItem)
+		json.NewEncoder(w).Encode(response)
 		w.WriteHeader(http.StatusOK)
 	}
 }
@@ -45,23 +51,27 @@ func getRegisterandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Expected POST", http.StatusBadRequest)
 	}
 
-	var registerToken gamecontroller.RegisterCommand
+	var registerToken commons.RegisterCommand
 	err := json.NewDecoder(r.Body).Decode(&registerToken)
 	if err != nil {
 		http.Error(w, "Invalid JSON", http.StatusBadRequest)
 		return
 	}
 
-	gamecontroller.RegisterPlayer(registerToken)
-	// Print the received item to the server's console
 	fmt.Printf("Received registration request: %+v\n", registerToken)
-	w.WriteHeader(http.StatusOK)
-
+	success, response, _ := gamecontroller.RegisterPlayer(registerToken)
+	json.NewEncoder(w).Encode(response)
+	if success {
+		w.WriteHeader(http.StatusOK)
+	} else {
+		w.WriteHeader(http.StatusBadRequest)
+	}
 }
 
 func StartRestApi(port int) {
 	http.HandleFunc("/command/basic", getBasicCommandHandler)
 	http.HandleFunc("/command/register", getRegisterandler)
+	http.HandleFunc("/command/info", getInfoCommandHandler)
 
 	// Start the HTTP server on port 8080
 	address := fmt.Sprintf("127.0.0.1:%d", port)
