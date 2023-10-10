@@ -82,6 +82,6 @@ func ListCharacterStats(targetPlayer *player.Player) string {
 	for _, item := range targetPlayer.Inventory.Items {
 		response += item.Name + "] ["
 	}
-	response = strings.TrimSuffix(response, "] [")
+	response = strings.TrimSuffix(response, " [")
 	return response
 }

@@ -58,6 +58,13 @@ func (inv *Inventory) AddItem(item *item.Item) bool {
 	return false // Inventory is full, item not added
 }
 
+func (inv *Inventory) AddMultipleOf(itemId item.ItemId, amount int) {
+	for i := 0; i < amount; i++ {
+		itemToAdd := item.Get(itemId)
+		inv.AddItem(itemToAdd)
+	}
+}
+
 // Returns the item from the inventory, nil if not found
 func (inv *Inventory) GetItems(id int) []*item.Item {
 	retItems := make([]*item.Item, 0)
@@ -76,6 +83,9 @@ func (player *Player) PlayerCapabilities() []capability.Capability {
 	if player.CanPlayerMove() {
 		capabilities = append(capabilities, capability.Move)
 	}
+
+	//A character can always forage if tile allows.
+	capabilities = append(capabilities, capability.Forage)
 
 	for _, item := range player.Inventory.Items {
 		if item != nil && item.Capability != capability.None {

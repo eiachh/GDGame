@@ -63,6 +63,8 @@ func (acc *ActionController) ExecuteAction(player *player.Player, onTile *tile.T
 		return acc.executeMine(player, onTile, capExtraArg)
 	case capability.Move:
 		return acc.executeMove(player, DirectionToInt(capExtraArg))
+	case capability.Forage:
+		return acc.executeForage(player, onTile, capExtraArg)
 	default:
 		return false, "Invalid action" + capability.CapabilityToString(action)
 	}

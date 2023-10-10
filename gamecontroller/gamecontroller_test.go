@@ -24,7 +24,7 @@ func TestPlayerRegistration(t *testing.T) {
 }
 
 func TestBasicCommand(t *testing.T) {
-	ownerId := "ownerdid"
+	ownerId := "ownerdid2"
 
 	regCommand := &commons.RegisterCommand{
 		OwnerId:    ownerId,

@@ -22,7 +22,7 @@ func TestSingleItemAddAndGet(t *testing.T) {
 
 	player1 := NewPlayer("Bob", 64, 0, 0)
 
-	adminpickaxe := item.Get(4)
+	adminpickaxe := item.Get(item.ADMINpickaxe)
 	player1.Inventory.AddItem(adminpickaxe)
 	if len(player1.Inventory.GetItems(4)) == 0 {
 		t.Errorf("Expected to find item with ID 4 in inventory but got empty list")
@@ -36,21 +36,21 @@ func TestSingleItemAddAndGet(t *testing.T) {
 func TestFullInventory(t *testing.T) {
 	player1 := NewPlayer("Bob", 2, 0, 0)
 
-	adminpickaxe := item.Get(4)
+	adminpickaxe := item.Get(item.ADMINpickaxe)
 	player1.Inventory.AddItem(adminpickaxe)
 
 	if len(player1.Inventory.GetItems(4)) != 1 {
 		t.Errorf("Expected to find item with ID 4 in inventory but got empty list")
 	}
 
-	adminpickaxe2 := item.Get(4)
+	adminpickaxe2 := item.Get(item.ADMINpickaxe)
 	player1.Inventory.AddItem(adminpickaxe2)
 
 	if len(player1.Inventory.GetItems(4)) != 2 {
 		t.Errorf("Expected to find 2 item with ID 2 but got len: '%d'", len(player1.Inventory.GetItems(4)))
 	}
 
-	adminpickaxe3 := item.Get(4)
+	adminpickaxe3 := item.Get(item.ADMINpickaxe)
 	if player1.Inventory.AddItem(adminpickaxe3) {
 		t.Errorf("Expected add item to fail for full inventory but got true")
 	}

@@ -9,6 +9,8 @@ const (
 	Wood ItemId = iota
 	Copper
 
+	Berry
+
 	Axe = iota + 500
 	Pickaxe
 	Pickaxe2
@@ -47,6 +49,8 @@ func querryItemData(id ItemId) (string, capability.Capability, int, string, int)
 		return "wood", capability.None, 0, "somedesc", 1
 	case Copper:
 		return "copper", capability.None, 0, "somedesc", 1
+	case Berry:
+		return "Berry", capability.None, 0, "somedesc", 1
 	case Axe:
 		return "axe", capability.WoodCut, 1, "somedesc", 1
 	case Pickaxe:

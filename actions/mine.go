@@ -21,7 +21,6 @@ var (
 )
 
 func init() {
-	MiningToolIds = []int{3, 4}
 
 	CopperMinLevel = 1
 	CopperDensityBase = 10
