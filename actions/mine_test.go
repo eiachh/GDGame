@@ -1,7 +1,7 @@
 package action
 
 import (
-	"GDGame/item"
+	item "GDGame/commons/item"
 	tile "GDGame/map"
 	"GDGame/player"
 	"testing"

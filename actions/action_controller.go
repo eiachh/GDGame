@@ -1,8 +1,8 @@
 package action
 
 import (
-	"GDGame/capability"
-	"GDGame/item"
+	capability "GDGame/commons/capability"
+	item "GDGame/commons/item"
 	tile "GDGame/map"
 	"GDGame/player"
 )
@@ -61,6 +61,8 @@ func (acc *ActionController) ExecuteAction(player *player.Player, onTile *tile.T
 	switch action {
 	case capability.Mine:
 		return acc.executeMine(player, onTile, capExtraArg)
+	case capability.WoodCut:
+		return acc.executeWoodCut(player, onTile, capExtraArg)
 	case capability.Move:
 		return acc.executeMove(player, DirectionToInt(capExtraArg))
 	case capability.Forage:

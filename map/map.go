@@ -36,7 +36,7 @@ func GenerateMap() *Map {
 		&Tile{
 			X:           (gameMap.Width / 2),
 			Y:           (gameMap.Height / 2),
-			Wood:        0,
+			Oak:         0,
 			Copper:      0,
 			Forage:      0,
 			HostileLvl:  0,

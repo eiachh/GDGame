@@ -2,10 +2,12 @@ package gamecontroller
 
 import (
 	action "GDGame/actions"
-	"GDGame/capability"
 	"GDGame/commons"
+	capability "GDGame/commons/capability"
 	tile "GDGame/map"
 	"GDGame/player"
+	"fmt"
+	"reflect"
 	"strconv"
 	"strings"
 )
@@ -53,6 +55,8 @@ func HandleInfoCommand(bcomm commons.BasicCommand) string {
 		return ListActions(targetPlayer, tile)
 	case capability.ListCharacterStats:
 		return ListCharacterStats(targetPlayer)
+	case capability.TileInfo:
+		return TileInfo(*tile)
 	}
 	return "Action not found (gc H.I.C.)!"
 }
@@ -83,5 +87,24 @@ func ListCharacterStats(targetPlayer *player.Player) string {
 		response += item.Name + "] ["
 	}
 	response = strings.TrimSuffix(response, " [")
+	return response
+}
+
+func TileInfo(targetTile tile.Tile) string {
+	var response string
+	v := reflect.ValueOf(targetTile)
+
+	// Ensure v is a struct; if not, return
+	if v.Kind() != reflect.Struct {
+		return "Error"
+	}
+
+	// Iterate through the struct fields
+	for i := 0; i < v.NumField(); i++ {
+		field := v.Type().Field(i)
+		value := v.Field(i)
+		response += fmt.Sprintf("%s: %v\n", field.Name, value.Interface())
+	}
+
 	return response
 }

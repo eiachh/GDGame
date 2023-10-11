@@ -2,8 +2,8 @@
 package player
 
 import (
-	"GDGame/capability"
-	"GDGame/item"
+	capability "GDGame/commons/capability"
+	item "GDGame/commons/item"
 )
 
 var DefaultInventorySize = 20

@@ -1,7 +1,7 @@
 package tile
 
 import (
-	"GDGame/capability"
+	capability "GDGame/commons/capability"
 	"GDGame/player"
 	"fmt"
 )
@@ -22,7 +22,7 @@ type Tile struct {
 	X int
 	Y int
 
-	Wood   int
+	Oak    int
 	Copper int
 	Forage int
 
@@ -34,11 +34,11 @@ type Tile struct {
 	Unique string
 }
 
-func NewTile(x, y, wood, copper, forage, hostilelvl, wildlifelvl int) *Tile {
+func NewTile(x, y, oak, copper, forage, hostilelvl, wildlifelvl int) *Tile {
 	return &Tile{
 		X:           x,
 		Y:           y,
-		Wood:        wood,
+		Oak:         oak,
 		Copper:      copper,
 		Forage:      forage,
 		HostileLvl:  hostilelvl,
@@ -57,7 +57,7 @@ func (tile *Tile) TileCapabilities() []capability.Capability {
 		capabilities = append(capabilities, capability.Move)
 	}
 
-	if tile.Wood > 0 {
+	if tile.Oak > 0 {
 		capabilities = append(capabilities, capability.WoodCut)
 	}
 	if tile.Copper > 0 {

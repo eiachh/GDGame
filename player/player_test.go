@@ -1,7 +1,7 @@
 package player
 
 import (
-	"GDGame/item"
+	item "GDGame/commons/item"
 	"testing"
 )
 
@@ -24,7 +24,7 @@ func TestSingleItemAddAndGet(t *testing.T) {
 
 	adminpickaxe := item.Get(item.ADMINpickaxe)
 	player1.Inventory.AddItem(adminpickaxe)
-	if len(player1.Inventory.GetItems(4)) == 0 {
+	if len(player1.Inventory.GetItems(adminpickaxe.ID)) == 0 {
 		t.Errorf("Expected to find item with ID 4 in inventory but got empty list")
 	}
 
@@ -39,14 +39,14 @@ func TestFullInventory(t *testing.T) {
 	adminpickaxe := item.Get(item.ADMINpickaxe)
 	player1.Inventory.AddItem(adminpickaxe)
 
-	if len(player1.Inventory.GetItems(4)) != 1 {
+	if len(player1.Inventory.GetItems(adminpickaxe.ID)) != 1 {
 		t.Errorf("Expected to find item with ID 4 in inventory but got empty list")
 	}
 
 	adminpickaxe2 := item.Get(item.ADMINpickaxe)
 	player1.Inventory.AddItem(adminpickaxe2)
 
-	if len(player1.Inventory.GetItems(4)) != 2 {
+	if len(player1.Inventory.GetItems(adminpickaxe2.ID)) != 2 {
 		t.Errorf("Expected to find 2 item with ID 2 but got len: '%d'", len(player1.Inventory.GetItems(4)))
 	}
 

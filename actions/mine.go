@@ -1,8 +1,8 @@
 package action
 
 import (
-	"GDGame/capability"
-	"GDGame/item"
+	capability "GDGame/commons/capability"
+	item "GDGame/commons/item"
 	tile "GDGame/map"
 	"GDGame/player"
 	"math"
@@ -11,8 +11,6 @@ import (
 )
 
 var (
-	MiningToolIds []int
-
 	CopperMinLevel           int
 	CopperDensityBase        int
 	CopperDefaultYield       int
@@ -27,7 +25,6 @@ func init() {
 	CopperDefaultYield = 2
 	CopperMaxDensityModifier = 2.0
 	CopperToolModifier = 0.7
-	//CopperToolModifBase = 0.5
 }
 
 func (acc *ActionController) executeMine(player *player.Player, onTile *tile.Tile, target string) (bool, string) {
